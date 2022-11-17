@@ -3,9 +3,10 @@
   "version": "0.0.1",
   "description": "Manage large Open API specifications and automatically generate TypeScript definitions from it.",
   "main": "src/index.ts",
+  "type": "module",
   "scripts": {
     "test": "jest",
-    "dev": "ts-node src/index.ts",
+    "dev": "ts-node-esm src/index.ts",
     "format": "prettier -w .",
     "lint": "eslint --ignore-path .prettierignore \"**/*.ts\"",
     "lint:fix": "eslint --fix --ignore-path .prettierignore \"**/*.ts\"",
