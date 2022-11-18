@@ -1,5 +1,5 @@
 {
-  "name": "patios",
+  "name": "@kinandcarta/patios",
   "version": "0.0.1",
   "description": "Manage large Open API specifications and automatically generate TypeScript definitions from it.",
   "main": "src/index.ts",
