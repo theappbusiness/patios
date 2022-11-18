@@ -9,6 +9,7 @@
     "format": "prettier -w .",
     "lint": "eslint --ignore-path .prettierignore \"**/*.ts\"",
     "lint:fix": "eslint --fix --ignore-path .prettierignore \"**/*.ts\"",
+    "lint:check-rule-overlap": "npx eslint-config-prettier src/index.ts",
     "typecheck": "tsc --noEmit"
   },
   "repository": {
@@ -26,6 +27,7 @@
     "@typescript-eslint/eslint-plugin": "^5.43.0",
     "@typescript-eslint/parser": "^5.43.0",
     "eslint": "^8.27.0",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jest-formatting": "^3.1.0",
     "eslint-plugin-prettier": "^4.2.1",
