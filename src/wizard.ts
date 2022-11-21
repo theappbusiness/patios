@@ -1,5 +1,5 @@
 import fs from 'fs'
-import prompt, { Schema } from 'prompt'
+import prompt from 'prompts'
 
 interface ProjectOptions {
   projectName: string
@@ -7,67 +7,57 @@ interface ProjectOptions {
   entryPoint: string
 }
 
-const getFirstQuestionSchema = ({
-  processDirectory,
-}: {
-  processDirectory: string
-}): Schema => ({
-  properties: {
-    projectName: {
-      description: 'Project name',
-      required: true,
-      type: 'string',
-      default: processDirectory,
-      minLength: 1,
-      pattern: /^[\w\-_]+$/,
-    },
-    documentSyntax: {
-      default: 'json',
-      description: 'Choose a document syntax, yaml or json',
-      message: 'The document syntax must be either yaml or json',
-      pattern: /^yaml|json$/i,
-      required: true,
-      type: 'string',
-      before: (input) => input.toLowerCase(),
-    },
-  },
+export const getProjectNamePrompt = (
+  processDirectory: string,
+): prompt.PromptObject => ({
+  type: 'text',
+  name: 'projectName',
+  message: 'Project name',
+  initial: processDirectory,
+  validate: (input) =>
+    !!input.match(/^[\w\-_]+$/) ||
+    'Project name may only contain letters, hyphens and underscores',
 })
 
-const getSecondQuestionSchema = ({
-  documentSyntax,
-}: {
-  documentSyntax: string
-}): Schema => ({
-  properties: {
-    entryPoint: {
-      default: `openapi.${documentSyntax}`,
-      description: 'Entry point',
-      message: `Entry point extension must match chosen document syntax (you chose ${documentSyntax})`,
-      pattern: new RegExp(
+export const getDocumentSyntaxPrompt = (): prompt.PromptObject => ({
+  name: 'documentSyntax',
+  type: 'select',
+  message: 'Document syntax',
+  choices: [
+    { title: 'json', value: 'json' },
+    { title: 'yaml', value: 'yaml' },
+  ],
+  initial: 0,
+})
+
+export const getEntryPointPrompt = (
+  documentSyntax: string,
+): prompt.PromptObject => ({
+  name: 'entryPoint',
+  type: 'text',
+  message: 'Entry point',
+  initial: `openapi.${documentSyntax}`,
+  validate: (input) =>
+    !!input.match(
+      new RegExp(
         `(.*)(?<!\\.|${documentSyntax === 'json' ? 'yaml' : 'json'})$`,
       ),
-      required: true,
-      type: 'string',
-      before: (input): string => {
-        if (input.match(/(\.json|\.yaml)$/)) {
-          return input
-        }
-        return `${input}.${documentSyntax}`
-      },
-    },
+    ) ||
+    `Entry point extension must match chosen document syntax (you chose ${documentSyntax})`,
+  format: (input): string => {
+    if (input.match(/(\.json|\.yaml)$/)) {
+      return input
+    }
+    return `${input}.${documentSyntax}`
   },
 })
 
-export const getProjectOptions = async (
+const getProjectOptions = async (
   processDirectory: string,
 ): Promise<ProjectOptions> => {
-  const { documentSyntax, projectName } = await prompt.get(
-    getFirstQuestionSchema({ processDirectory }),
-  )
-
-  const { entryPoint } = await prompt.get(
-    getSecondQuestionSchema({ documentSyntax: documentSyntax as string }),
-  )
+  const { projectName } = await prompt(getProjectNamePrompt(processDirectory))
+  const { documentSyntax } = await prompt(getDocumentSyntaxPrompt())
+  const { entryPoint } = await prompt(getEntryPointPrompt(documentSyntax))
 
   return {
     documentSyntax,
@@ -76,7 +66,7 @@ export const getProjectOptions = async (
   } as ProjectOptions
 }
 
-export const makeBoilerplate = (
+const makeBoilerplate = (
   processDirectory: string,
   { entryPoint, projectName }: ProjectOptions,
 ): void => {
