@@ -1,0 +1,5 @@
+{
+  "moduleFileExtensions": ["js", "ts"],
+  "preset": "ts-jest",
+  "testPathIgnorePatterns": ["/node_modules/"]
+}
