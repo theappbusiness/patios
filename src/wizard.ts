@@ -70,16 +70,16 @@ const makeBoilerplate = (
   processDirectory: string,
   { entryPoint, projectName }: ProjectOptions,
 ): void => {
-  let writeDirectory = processDirectory
+  let writeDirectory = '.'
   if (processDirectory !== projectName) {
-    fs.mkdirSync(`${processDirectory}/${projectName}` as string)
+    fs.mkdirSync(projectName)
     writeDirectory += `/${projectName}`
   }
   fs.writeFileSync(`${writeDirectory}/${entryPoint}`, 'Hello Spec!')
 }
 
 export const init = async (): Promise<void> => {
-  const processDirectory = process.argv[1].split('/').reverse()?.[1]
+  const processDirectory = process.env.INIT_CWD?.split('/').reverse()[0] || ''
   const projectOptions = await getProjectOptions(processDirectory)
   makeBoilerplate(processDirectory, projectOptions)
 }
