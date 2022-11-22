@@ -1,5 +1,5 @@
-import fs from 'fs'
-import prompt from 'prompts'
+import * as fs from 'fs'
+import { prompt, PromptObject } from 'prompts'
 
 interface ProjectOptions {
   projectName: string
@@ -9,7 +9,7 @@ interface ProjectOptions {
 
 export const getProjectNamePrompt = (
   processDirectory: string,
-): prompt.PromptObject => ({
+): PromptObject => ({
   type: 'text',
   name: 'projectName',
   message: 'Project name',
@@ -19,7 +19,7 @@ export const getProjectNamePrompt = (
     'Project name may only contain letters, hyphens and underscores',
 })
 
-export const getDocumentSyntaxPrompt = (): prompt.PromptObject => ({
+export const getDocumentSyntaxPrompt = (): PromptObject => ({
   name: 'documentSyntax',
   type: 'select',
   message: 'Document syntax',
@@ -30,9 +30,7 @@ export const getDocumentSyntaxPrompt = (): prompt.PromptObject => ({
   initial: 0,
 })
 
-export const getEntryPointPrompt = (
-  documentSyntax: string,
-): prompt.PromptObject => ({
+export const getEntryPointPrompt = (documentSyntax: string): PromptObject => ({
   name: 'entryPoint',
   type: 'text',
   message: 'Entry point',
