@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "Manage large Open API specifications and automatically generate TypeScript definitions from them.",
   "main": "src/index.ts",
+  "engines": {
+    "node": ">18.12.1"
+  },
   "scripts": {
     "test": "jest",
     "dev": "node-dev src/write-yaml-template.ts",

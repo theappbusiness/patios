@@ -1,9 +1,10 @@
+import { getRandomString } from './test-utils/random'
 import { getEntryPointPrompt, getProjectNamePrompt } from './wizard'
 
 describe('getProjectNamePrompt', () => {
   describe('initial value', () => {
     it('matches the given process directory', () => {
-      const randomString = Math.random().toString(36).substring(2)
+      const randomString = getRandomString()
       const projectNamePrompt = getProjectNamePrompt(randomString)
       expect(projectNamePrompt.initial).toBe(randomString)
     })
@@ -12,7 +13,7 @@ describe('getProjectNamePrompt', () => {
   describe('validation', () => {
     it('permits alphanumeric names', () => {
       const projectNamePrompt = getProjectNamePrompt('.')
-      const randomString = Math.random().toString(36).substring(2)
+      const randomString = getRandomString()
       expect(
         projectNamePrompt.validate?.(randomString, [], projectNamePrompt),
       ).toBe(true)
@@ -43,7 +44,7 @@ describe('getProjectNamePrompt', () => {
             projectNamePrompt,
           ),
         ).toMatch(
-          /Project name may only contain letters, hyphens and underscores/,
+          /Project name may only contain letters, numbers, hyphens and underscores/,
         )
       },
     )
@@ -53,7 +54,7 @@ describe('getProjectNamePrompt', () => {
 describe('getEntryPointPrompt', () => {
   describe('initial value', () => {
     it('matches the given document syntax', () => {
-      const randomString = Math.random().toString(36).substring(2)
+      const randomString = getRandomString()
       const entryPointPrompt = getEntryPointPrompt(randomString)
       expect(entryPointPrompt.initial).toBe(`openapi.${randomString}`)
     })
@@ -62,7 +63,7 @@ describe('getEntryPointPrompt', () => {
   describe('validation', () => {
     it('permits alphanumeric names', () => {
       const entryPointPrompt = getEntryPointPrompt('json')
-      const randomString = Math.random().toString(36).substring(2)
+      const randomString = getRandomString()
       expect(
         entryPointPrompt.validate?.(randomString, [], entryPointPrompt),
       ).toBe(true)
@@ -70,8 +71,8 @@ describe('getEntryPointPrompt', () => {
 
     it('permits names containing .', () => {
       const entryPointPrompt = getEntryPointPrompt('json')
-      const randomStringA = Math.random().toString(36).substring(2)
-      const randomStringB = Math.random().toString(36).substring(2)
+      const randomStringA = getRandomString()
+      const randomStringB = getRandomString()
       expect(
         entryPointPrompt.validate?.(
           `${randomStringA}.${randomStringB}`,
@@ -85,8 +86,8 @@ describe('getEntryPointPrompt', () => {
       'permits names ending in the given document syntax (%s)',
       (syntax) => {
         const entryPointPrompt = getEntryPointPrompt(syntax)
-        const randomStringA = Math.random().toString(36).substring(2)
-        const randomStringB = Math.random().toString(36).substring(2)
+        const randomStringA = getRandomString()
+        const randomStringB = getRandomString()
         expect(
           entryPointPrompt.validate?.(
             `${randomStringA}.${randomStringB}.${syntax}`,
@@ -104,8 +105,8 @@ describe('getEntryPointPrompt', () => {
       'does not permit names ending in the opposing document syntax (given %s reject %s)',
       (syntaxA, syntaxB) => {
         const entryPointPrompt = getEntryPointPrompt(syntaxA)
-        const randomStringA = Math.random().toString(36).substring(2)
-        const randomStringB = Math.random().toString(36).substring(2)
+        const randomStringA = getRandomString()
+        const randomStringB = getRandomString()
         expect(
           entryPointPrompt.validate?.(
             `${randomStringA}.${randomStringB}.${syntaxB}`,
@@ -118,8 +119,8 @@ describe('getEntryPointPrompt', () => {
 
     it('does not permit names ending in .', () => {
       const entryPointPrompt = getEntryPointPrompt('yaml')
-      const randomStringA = Math.random().toString(36).substring(2)
-      const randomStringB = Math.random().toString(36).substring(2)
+      const randomStringA = getRandomString()
+      const randomStringB = getRandomString()
       expect(
         entryPointPrompt.validate?.(
           `${randomStringA}.${randomStringB}.`,
@@ -135,8 +136,8 @@ describe('getEntryPointPrompt', () => {
       'leaves names ending in %s unchanged',
       (syntax) => {
         const entryPointPrompt = getEntryPointPrompt(syntax)
-        const randomStringA = Math.random().toString(36).substring(2)
-        const randomStringB = Math.random().toString(36).substring(2)
+        const randomStringA = getRandomString()
+        const randomStringB = getRandomString()
         const filename = `${randomStringA}.${randomStringB}.${syntax}`
         expect(entryPointPrompt.format?.(filename, [], entryPointPrompt)).toBe(
           filename,
@@ -146,8 +147,8 @@ describe('getEntryPointPrompt', () => {
 
     it.each(['json', 'yaml'])('appends the given document syntax', (syntax) => {
       const entryPointPrompt = getEntryPointPrompt(syntax)
-      const randomStringA = Math.random().toString(36).substring(2)
-      const randomStringB = Math.random().toString(36).substring(2)
+      const randomStringA = getRandomString()
+      const randomStringB = getRandomString()
       const filename = `${randomStringA}.${randomStringB}`
       expect(entryPointPrompt.format?.(filename, [], entryPointPrompt)).toBe(
         `${filename}.${syntax}`,
