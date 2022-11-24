@@ -2,12 +2,13 @@
   "compilerOptions": {
       "lib": ["ESNext"],
       "target": "ESNext",
-      "module": "ESNext",
+      "module": "CommonJS",
+      "outDir": "bin",
       "strict": true,
       "moduleResolution": "node",
       "esModuleInterop": true,
       "allowSyntheticDefaultImports": true
   },
   "include": ["src"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "*.test.*", "bin"]
 }
