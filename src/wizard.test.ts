@@ -44,7 +44,7 @@ describe('getProjectNamePrompt', () => {
             projectNamePrompt,
           ),
         ).toMatch(
-          /Project name may only contain letters, hyphens and underscores/,
+          /Project name may only contain letters, numbers, hyphens and underscores/,
         )
       },
     )
