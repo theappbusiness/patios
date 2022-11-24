@@ -32,7 +32,7 @@ const walk = (dir: string, prevResults?: string[]): string[] => {
     const jsonDirname = path.dirname(binJsonTemplatesPath)
     const yamlDirname = path.dirname(binYamlTemplatesPath)
     const jsonStat = fs.statSync(jsonDirname, { throwIfNoEntry: false })
-    const yamlStat = fs.statSync(jsonDirname, { throwIfNoEntry: false })
+    const yamlStat = fs.statSync(yamlDirname, { throwIfNoEntry: false })
     if (!jsonStat?.isDirectory()) {
       fs.mkdirSync(jsonDirname)
     }
