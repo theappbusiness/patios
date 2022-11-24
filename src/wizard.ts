@@ -17,7 +17,7 @@ export const getProjectNamePrompt = (
   initial: processDirectory,
   validate: (input) =>
     !!input.match(/^[\w\-_]+$/) ||
-    'Project name may only contain letters, hyphens and underscores',
+    'Project name may only contain letters, numbers, hyphens and underscores',
 })
 
 export const getDocumentSyntaxPrompt = (): PromptObject => ({
