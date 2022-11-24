@@ -1,4 +1,5 @@
 import * as fs from 'fs'
+import * as path from 'path'
 import { prompt, PromptObject } from 'prompts'
 
 interface ProjectOptions {
@@ -24,8 +25,8 @@ export const getDocumentSyntaxPrompt = (): PromptObject => ({
   type: 'select',
   message: 'Document syntax',
   choices: [
-    { title: 'json', value: 'json' },
-    { title: 'yaml', value: 'yaml' },
+    { title: 'JSON', value: 'json' },
+    { title: 'YAML', value: 'yaml' },
   ],
   initial: 0,
 })
@@ -43,7 +44,7 @@ export const getEntryPointPrompt = (documentSyntax: string): PromptObject => ({
     ) ||
     `Entry point extension must match chosen document syntax (you chose ${documentSyntax})`,
   format: (input): string => {
-    if (input.match(/(\.json|\.yaml)$/)) {
+    if (input.match(/(\.json|\.yaml)$/i)) {
       return input
     }
     return `${input}.${documentSyntax}`
@@ -73,11 +74,11 @@ const makeBoilerplate = (
     fs.mkdirSync(projectName)
     writeDirectory += `/${projectName}`
   }
-  fs.writeFileSync(`${writeDirectory}/${entryPoint}`, 'Hello Spec!')
+  fs.writeFileSync(path.join(writeDirectory, entryPoint), 'Hello Spec!')
 }
 
 export const init = async (): Promise<void> => {
-  const processDirectory = process.env.INIT_CWD?.split('/').reverse()[0] || ''
+  const processDirectory = path.parse(process.env.INIT_CWD || '').base
   const projectOptions = await getProjectOptions(processDirectory)
   makeBoilerplate(processDirectory, projectOptions)
 }
