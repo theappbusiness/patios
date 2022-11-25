@@ -1,6 +1,5 @@
 package-lock.json
 package.json
-.eslintrc.json
 .prettierrc.js
 tsconfig.json
 bin
