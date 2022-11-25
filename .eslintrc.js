@@ -75,7 +75,7 @@ module.exports = {
   rules: jsRules,
   overrides: [
     {
-      files: ['**/*.ts', '**/*.tsx'],
+      files: ['**/*.ts'],
       extends: tsExtends,
       parser: '@typescript-eslint/parser',
       parserOptions: tsParserOptions,
