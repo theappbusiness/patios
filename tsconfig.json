@@ -10,5 +10,6 @@
       "allowSyntheticDefaultImports": true
   },
   "include": ["src"],
-  "exclude": ["node_modules", "*.test.*", "bin"]
+  "exclude": ["node_modules", "src/*.test.*", "src/test-utils", "bin"],
+  "files": ["json-to-pretty-yaml.d.ts"]
 }

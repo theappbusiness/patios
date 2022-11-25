@@ -8,7 +8,7 @@ const walk = (dir: string, prevResults?: string[]): string[] => {
   list.forEach((file) => {
     file = path.resolve(dir, file)
     const stat = fs.statSync(file)
-    if (stat && stat.isDirectory()) {
+    if (stat.isDirectory()) {
       walk(file, results)
     } else {
       results.push(file)
@@ -18,6 +18,10 @@ const walk = (dir: string, prevResults?: string[]): string[] => {
 }
 
 ;((): void => {
+  const binTemplatesStat = fs.statSync('./bin/templates')
+  if (binTemplatesStat.isDirectory()) {
+    fs.rmSync('./bin/templates', { recursive: true })
+  }
   fs.mkdirSync('./bin/templates')
   const jsonPaths = walk('./templates/json')
   jsonPaths.forEach((jsonPath) => {
