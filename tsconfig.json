@@ -9,7 +9,6 @@
       "esModuleInterop": true,
       "allowSyntheticDefaultImports": true
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "src/*.test.*", "src/test-utils", "bin"],
-  "files": ["json-to-pretty-yaml.d.ts"]
+  "include": ["src", "types"],
+  "exclude": ["node_modules", "bin"],
 }

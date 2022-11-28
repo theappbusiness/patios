@@ -9,7 +9,7 @@
   "scripts": {
     "test": "jest",
     "dev": "node-dev src/write-bin-template.ts",
-    "build": "tsc && node bin/write-bin-template.js",
+    "build": "tsc --project tsconfig.build.json && node bin/write-bin-template.js",
     "format": "prettier -w .",
     "lint": "eslint --ignore-path .prettierignore \"**/*.ts\"",
     "lint:fix": "eslint --fix --ignore-path .prettierignore \"**/*.ts\"",

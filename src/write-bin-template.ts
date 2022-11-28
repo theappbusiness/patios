@@ -27,8 +27,7 @@ const walk = (dir: string, prevResults?: string[]): string[] => {
   fs.mkdirSync('./bin/templates')
   const jsonPaths = walk('./templates/json')
   jsonPaths.forEach((jsonPath) => {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const json = fs.readFileSync(jsonPath)
+    const json = fs.readFileSync(jsonPath).toString()
     const data = stringify(json)
     const binJsonTemplatesPath = jsonPath.replace(
       '/templates/',
