@@ -28,7 +28,6 @@ const walk = (dir: string, prevResults?: string[]): string[] => {
   const jsonPaths = walk('./templates/json')
   jsonPaths.forEach((jsonPath) => {
     const json = fs.readFileSync(jsonPath).toString()
-    const data = stringify(json)
     const binJsonTemplatesPath = jsonPath.replace(
       '/templates/',
       '/bin/templates/',
@@ -44,7 +43,7 @@ const walk = (dir: string, prevResults?: string[]): string[] => {
     if (!yamlStat?.isDirectory()) {
       fs.mkdirSync(yamlDirname)
     }
-    fs.writeFileSync(binJsonTemplatesPath, data)
-    fs.writeFileSync(binYamlTemplatesPath, data)
+    fs.writeFileSync(binJsonTemplatesPath, json)
+    fs.writeFileSync(binYamlTemplatesPath, stringify(JSON.parse(json)))
   })
 })()
