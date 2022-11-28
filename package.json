@@ -54,12 +54,5 @@
   },
   "dependencies": {
     "prompts": "^2.4.2"
-  },
-  "lint-staged": {
-    "*.{js,ts}": [
-      "npm run typecheck -- --lib ESNext",
-      "npm run format",
-      "npm run lint:fix"
-    ]
   }
 }
