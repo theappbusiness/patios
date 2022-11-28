@@ -3,7 +3,7 @@
     "description": "An example path providing information about PATIOS",
     "responses": {
       "200": {
-        "$ref": "../responses/informationSuccess.json"
+        "$ref": "../responses/informationSuccess.$EXT"
       }
     }
   }

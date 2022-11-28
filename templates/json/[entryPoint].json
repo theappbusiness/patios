@@ -8,7 +8,7 @@
   "servers": [{ "url": "https://github.com/theappbusiness/patios/" }],
   "paths": {
     "/v1/information": {
-      "$ref": "./paths/information.json"
+      "$ref": "./paths/information.$EXT"
     }
   }
 }
