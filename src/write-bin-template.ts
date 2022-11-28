@@ -18,8 +18,10 @@ const walk = (dir: string, prevResults?: string[]): string[] => {
 }
 
 ;((): void => {
-  const binTemplatesStat = fs.statSync('./bin/templates')
-  if (binTemplatesStat.isDirectory()) {
+  const binTemplatesStat = fs.statSync('./bin/templates', {
+    throwIfNoEntry: false,
+  })
+  if (binTemplatesStat) {
     fs.rmSync('./bin/templates', { recursive: true })
   }
   fs.mkdirSync('./bin/templates')
