@@ -28,7 +28,7 @@ const walk = (dir: string, prevResults?: string[]): string[] => {
   const jsonPaths = walk('./templates/json')
   jsonPaths.forEach((jsonPath) => {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const json = require(jsonPath)
+    const json = fs.readFileSync(jsonPath)
     const data = stringify(json)
     const binJsonTemplatesPath = jsonPath.replace(
       '/templates/',
@@ -38,7 +38,7 @@ const walk = (dir: string, prevResults?: string[]): string[] => {
     const jsonDirname = path.dirname(binJsonTemplatesPath)
     const yamlDirname = path.dirname(binYamlTemplatesPath)
     const jsonStat = fs.statSync(jsonDirname, { throwIfNoEntry: false })
-    const yamlStat = fs.statSync(jsonDirname, { throwIfNoEntry: false })
+    const yamlStat = fs.statSync(yamlDirname, { throwIfNoEntry: false })
     if (!jsonStat?.isDirectory()) {
       fs.mkdirSync(jsonDirname)
     }
