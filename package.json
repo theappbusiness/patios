@@ -32,7 +32,6 @@
   "homepage": "https://github.com/theappbusiness/patios#readme",
   "devDependencies": {
     "@types/jest": "^29.2.3",
-    "@types/prompt": "^1.1.4",
     "@types/prompts": "^2.4.1",
     "@typescript-eslint/eslint-plugin": "^5.43.0",
     "@typescript-eslint/parser": "^5.43.0",
