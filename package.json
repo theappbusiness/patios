@@ -15,6 +15,7 @@
     "lint:fix": "eslint --fix --ignore-path .prettierignore \"**/*.ts\"",
     "lint:check-rule-overlap": "npx eslint-config-prettier src/index.ts",
     "typecheck": "tsc --noEmit",
+    "validate-templates": "npx swagger-cli validate ./bin/templates/json/[entryPoint].json & npx swagger-cli validate ./bin/templates/yaml/[entryPoint].yaml",
     "prepare": "husky install"
   },
   "bin": {
@@ -46,6 +47,7 @@
     "lint-staged": "^13.0.3",
     "node-dev": "^7.4.3",
     "prettier": "^2.7.1",
+    "swagger-cli": "^4.0.4",
     "ts-jest": "^29.0.3",
     "typescript": "^4.9.3"
   },
