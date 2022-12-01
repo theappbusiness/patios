@@ -1,34 +1,21 @@
-import { getRandomString, randomiseCase } from './random'
-
-describe('randomiseCase', () => {
-  const longHumanString =
-    "A string long enough that there's a statistically insignificant chance that none of the letters are changed"
-
-  it('randomises randomly', () => {
-    expect(randomiseCase(randomiseCase(longHumanString))).not.toEqual(
-      randomiseCase(longHumanString),
-    )
-  })
-
-  it('makes some letters uppercase', () => {
-    expect(randomiseCase(longHumanString.toLowerCase())).toMatch(/[A-Z]/)
-  })
-})
+import { getRandomString } from './random'
 
 describe('getRandomString', () => {
   it('randomises randomly', () => {
-    expect(getRandomString()).not.toEqual(getRandomString())
-  })
+    // this takes ~580ms
+    for (let i = 0; i < 1000; i++) {
+      const sample = Array(10)
+        .fill(null)
+        .map(() => getRandomString())
+      const isNotSelfSimilar = sample.every(
+        (string, i) => string !== sample[i - 1],
+      )
+      expect(isNotSelfSimilar).toBe(true)
 
-  it('contains uppercase letters', () => {
-    expect(getRandomString()).toMatch(/[A-Z]/)
-  })
-
-  it('contains lowercase letters', () => {
-    expect(getRandomString()).toMatch(/[a-z]/)
-  })
-
-  it('contains numbers', () => {
-    expect(getRandomString()).toMatch(/[0-9]/)
+      const concatenatedSample = sample.reduce((acc, cur) => acc + cur, '')
+      expect(concatenatedSample).toMatch(/[A-Z]/)
+      expect(concatenatedSample).toMatch(/[a-z]/)
+      expect(concatenatedSample).toMatch(/[0-9]/)
+    }
   })
 })
