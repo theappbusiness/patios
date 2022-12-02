@@ -1,12 +1,11 @@
-import * as nodefs from 'fs'
-import * as nodepath from 'path'
+import * as fs from 'fs'
+import * as path from 'path'
 import { walkFactory } from './walk'
 import { makeDirectorySafelyFactory } from './make-directory-safely'
 import { FileSystem, Path } from './types'
 import { writeFileToBinFactory } from './write-file-to-bin'
-
-const spool = (
-  fileSystem: FileSystem,
+;((
+  fs: FileSystem,
   path: Path,
   {
     sourcePathFragment,
@@ -20,28 +19,21 @@ const spool = (
     relativeTargetPath: string
   },
 ): void => {
-  makeDirectorySafelyFactory(fileSystem)(relativeTargetPath, {
+  makeDirectorySafelyFactory(fs)(relativeTargetPath, {
     shouldEmpty: true,
   })
   walkFactory(
-    fileSystem,
+    fs,
     path,
-  )(path.join(relativeSourcePath, '/json')).forEach(
-    writeFileToBinFactory(fileSystem, path, {
+  )(relativeSourcePath).forEach(
+    writeFileToBinFactory(fs, path, {
       sourcePathFragment,
       targetPathFragment,
     }),
   )
-}
-
-const sourcePathFragment = '/templates'
-const targetPathFragment = '/bin/templates'
-
-const relativeSourcePath = '.' + sourcePathFragment
-const relativeTargetPath = '.' + targetPathFragment
-spool(nodefs, nodepath, {
-  sourcePathFragment,
-  targetPathFragment,
-  relativeSourcePath,
-  relativeTargetPath,
+})(fs, path, {
+  sourcePathFragment: '/templates',
+  targetPathFragment: '/bin/templates',
+  relativeSourcePath: './templates/json',
+  relativeTargetPath: './bin/templates',
 })
