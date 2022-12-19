@@ -1,4 +1,4 @@
-import { FileSystem } from '../write-bin-template/types'
+import type { FileSystem } from '../write-bin-template/types'
 import { mockify } from './mockify'
 
 // Feel free to fill in mkdirSync and rmSync if you think of something sensible

@@ -1,4 +1,4 @@
-import { FileSystem } from './types'
+import type { FileSystem } from './types'
 
 export type MakeDirectorySafely = (
   path: string,

@@ -1,4 +1,4 @@
-import { FileSystem, Path } from './types'
+import type { FileSystem, Path } from './types'
 
 export type Walk = (dir: string, prevResults?: string[] | undefined) => string[]
 

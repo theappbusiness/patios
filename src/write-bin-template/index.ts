@@ -2,7 +2,7 @@ import * as fs from 'fs'
 import * as path from 'path'
 import { walkFactory } from './walk'
 import { makeDirectorySafelyFactory } from './make-directory-safely'
-import { FileSystem, Path } from './types'
+import type { FileSystem, Path } from './types'
 import { writeFileToBinFactory } from './write-file-to-bin'
 ;((
   fs: FileSystem,

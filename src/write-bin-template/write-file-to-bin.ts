@@ -1,7 +1,7 @@
 import { makeDirectorySafelyFactory } from './make-directory-safely'
 import { getTemplateFileStringsFactory } from './get-template-file-strings'
 import { getBinTargetPathsFactory } from './get-bin-target-paths'
-import { FileSystem, Path } from './types'
+import type { FileSystem, Path } from './types'
 
 export type WriteFilesToBin = (jsonPath: string) => void
 
