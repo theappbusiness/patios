@@ -1,5 +1,5 @@
 import { stringify } from 'json-to-pretty-yaml'
-import type { FileSystem } from './types'
+import type { FileSystem } from '../../types/node-stub.d'
 
 export type GetTemplateFileStrings = (jsonPath: string) => {
   jsonFileStr: string

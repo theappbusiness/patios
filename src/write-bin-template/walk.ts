@@ -1,4 +1,4 @@
-import type { FileSystem, Path } from './types'
+import type { FileSystem, Path } from '../../types/node-stub.d'
 
 export type Walk = (dir: string, prevResults?: string[] | undefined) => string[]
 

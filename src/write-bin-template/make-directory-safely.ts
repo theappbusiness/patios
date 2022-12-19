@@ -1,4 +1,4 @@
-import type { FileSystem } from './types'
+import type { FileSystem } from '../../types/node-stub.d'
 
 export type MakeDirectorySafely = (
   path: string,

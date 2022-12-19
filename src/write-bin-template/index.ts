@@ -1,8 +1,8 @@
 import * as fs from 'fs'
 import * as path from 'path'
+import type { FileSystem, Path } from '../../types/node-stub.d'
 import { walkFactory } from './walk'
 import { makeDirectorySafelyFactory } from './make-directory-safely'
-import type { FileSystem, Path } from './types'
 import { writeFileToBinFactory } from './write-file-to-bin'
 ;((
   fs: FileSystem,

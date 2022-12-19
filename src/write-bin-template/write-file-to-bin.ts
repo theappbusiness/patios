@@ -1,7 +1,7 @@
+import type { FileSystem, Path } from '../../types/node-stub.d'
 import { makeDirectorySafelyFactory } from './make-directory-safely'
 import { getTemplateFileStringsFactory } from './get-template-file-strings'
 import { getBinTargetPathsFactory } from './get-bin-target-paths'
-import type { FileSystem, Path } from './types'
 
 export type WriteFilesToBin = (jsonPath: string) => void
 

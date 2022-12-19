@@ -1,4 +1,4 @@
-import { Path } from '../write-bin-template/types'
+import { Path } from '../../types/node-stub.d'
 import { mockify } from './mockify'
 
 const dirname = (path: string): string => {
