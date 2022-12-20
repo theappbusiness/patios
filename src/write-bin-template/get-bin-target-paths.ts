@@ -3,7 +3,7 @@ export type SourceAndTargetDirectories = {
   targetPathFragment: string
 }
 
-export type BinTargetPaths = (jsonPath: string) => {
+export type BinTargetPaths = {
   jsonBinPath: string
   yamlBinPath: string
 }
@@ -12,8 +12,8 @@ export const getBinTargetPathsFactory =
   ({
     sourcePathFragment,
     targetPathFragment,
-  }: SourceAndTargetDirectories): BinTargetPaths =>
-  (jsonPath: string): { jsonBinPath: string; yamlBinPath: string } => {
+  }: SourceAndTargetDirectories): ((jsonPath: string) => BinTargetPaths) =>
+  (jsonPath: string): BinTargetPaths => {
     const jsonBinPath = jsonPath.replace(sourcePathFragment, targetPathFragment)
     const yamlBinPath = jsonBinPath.replaceAll('json', 'yaml')
     return {
