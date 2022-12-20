@@ -75,6 +75,10 @@ const makeBoilerplate = (
     fs.mkdirSync(projectName)
     writeDirectory = path.join(writeDirectory, projectName)
   }
+
+  writeDirectory = path.join(writeDirectory, 'src')
+  fs.mkdirSync(writeDirectory)
+
   fs.cpSync(
     path.join(__dirname, './templates/', documentSyntax),
     writeDirectory,
