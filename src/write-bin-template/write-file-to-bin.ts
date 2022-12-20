@@ -2,30 +2,22 @@ import type { FileSystem, Path } from '../../types/node-stub.d'
 import { makeDirectorySafelyFactory } from './make-directory-safely'
 import { getTemplateFileStringsFactory } from './get-template-file-strings'
 import { getBinTargetPathsFactory } from './get-bin-target-paths'
+import type { SourceAndTargetDirectories } from './get-bin-target-paths'
 
 export type WriteFilesToBin = (jsonPath: string) => void
 
 export const writeFileToBinFactory = (
   fileSystem: FileSystem,
   path: Path,
-  {
-    sourcePathFragment,
-    targetPathFragment,
-  }: {
-    sourcePathFragment: string
-    targetPathFragment: string
-  },
+  sourceAndTargetDirs: SourceAndTargetDirectories,
 ): WriteFilesToBin => {
-  const getBinTargetPaths = getBinTargetPathsFactory({
-    sourcePathFragment,
-    targetPathFragment,
-  })
+  const getBinTargetPaths = getBinTargetPathsFactory(sourceAndTargetDirs)
+  const templateStringFactory = getTemplateFileStringsFactory(fileSystem)
+  const makeDirectory = makeDirectorySafelyFactory(fileSystem)
 
   return (jsonPath: string): void => {
-    const { jsonFileStr, yamlFileStr } =
-      getTemplateFileStringsFactory(fileSystem)(jsonPath)
+    const { jsonFileStr, yamlFileStr } = templateStringFactory(jsonPath)
     const { jsonBinPath, yamlBinPath } = getBinTargetPaths(jsonPath)
-    const makeDirectory = makeDirectorySafelyFactory(fileSystem)
     new Map([
       [jsonBinPath, jsonFileStr],
       [yamlBinPath, yamlFileStr],
