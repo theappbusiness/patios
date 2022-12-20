@@ -26,9 +26,12 @@ export const writeFileToBinFactory = (
       getTemplateFileStringsFactory(fileSystem)(jsonPath)
     const { jsonBinPath, yamlBinPath } = getBinTargetPaths(jsonPath)
     const makeDirectory = makeDirectorySafelyFactory(fileSystem)
-    makeDirectory(path.dirname(jsonBinPath))
-    makeDirectory(path.dirname(yamlBinPath))
-    fileSystem.writeFileSync(jsonBinPath, jsonFileStr)
-    fileSystem.writeFileSync(yamlBinPath, yamlFileStr)
+    new Map([
+      [jsonBinPath, jsonFileStr],
+      [yamlBinPath, yamlFileStr],
+    ]).forEach((fileContent, binPath) => {
+      makeDirectory(path.dirname(binPath))
+      fileSystem.writeFileSync(binPath, fileContent)
+    })
   }
 }
