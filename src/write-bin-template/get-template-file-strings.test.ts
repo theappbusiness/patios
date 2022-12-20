@@ -19,15 +19,22 @@ const mockFile = {
 }
 
 describe('getTemplateFileStrings', () => {
-  it('Converts a JSON template to stringified JSON and YAML', () => {
+  let jsonFileStr: string, yamlFileStr: string
+  beforeAll(() => {
     const mockFileSystem = makeMockFileSystem({
       readFileSync() {
         return Buffer.from(JSON.stringify(mockFile))
       },
     })
     const getTemplateFileStrings = getTemplateFileStringsFactory(mockFileSystem)
-    const { jsonFileStr, yamlFileStr } = getTemplateFileStrings('/path')
+    ;({ jsonFileStr, yamlFileStr } = getTemplateFileStrings('/path'))
+  })
+
+  it('Converts a JSON template to stringified JSON', () => {
     expect(jsonFileStr).toMatchSnapshot()
+  })
+
+  it('Converts a JSON template to stringified YAML', () => {
     expect(yamlFileStr).toMatchSnapshot()
   })
 })
