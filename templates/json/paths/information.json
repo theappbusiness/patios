@@ -1,0 +1,10 @@
+{
+  "get": {
+    "description": "An example path providing information about PATIOS",
+    "responses": {
+      "200": {
+        "$ref": "../responses/informationSuccess.$EXT"
+      }
+    }
+  }
+}

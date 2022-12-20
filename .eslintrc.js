@@ -68,7 +68,7 @@ module.exports = {
     node: true,
   },
   extends: jsExtends,
-  ignorePatterns: ['**/node_modules'],
+  ignorePatterns: ['**/node_modules', 'bin'],
   parserOptions: jsParserOptions,
   plugins: jsPlugins,
   root: true,

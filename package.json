@@ -4,18 +4,21 @@
   "description": "Manage large Open API specifications and automatically generate TypeScript definitions from them.",
   "main": "src/index.ts",
   "engines": {
-    "node": ">18.12.1"
+    "node": ">=18.12.1"
   },
   "scripts": {
     "test": "jest",
     "dev": "node-dev src/index.ts",
-    "build": "tsc",
+    "dev:quick": "node-dev src/write-bin-template.ts",
+    "build": "tsc --project tsconfig.build.json && node bin/write-bin-template/index.js",
     "format": "prettier -w .",
     "lint": "eslint --ignore-path .prettierignore \"**/*.ts\"",
     "lint:fix": "eslint --fix --ignore-path .prettierignore \"**/*.ts\"",
     "lint:check-rule-overlap": "npx eslint-config-prettier src/index.ts",
     "typecheck": "tsc --noEmit",
-    "postinstall": "npm run build",
+    "validate-templates": "concurrently --kill-others-on-fail -c \"auto\" -n \"validate:\" \"npm:validate-template-*\"",
+    "validate-template-json": "npx swagger-cli validate ./bin/templates/json/[entryPoint].json",
+    "validate-template-yaml": "npx swagger-cli validate ./bin/templates/yaml/[entryPoint].yaml",
     "prepare": "husky install"
   },
   "bin": {
@@ -33,10 +36,10 @@
   "homepage": "https://github.com/theappbusiness/patios#readme",
   "devDependencies": {
     "@types/jest": "^29.2.3",
-    "@types/prompt": "^1.1.4",
     "@types/prompts": "^2.4.1",
     "@typescript-eslint/eslint-plugin": "^5.43.0",
     "@typescript-eslint/parser": "^5.43.0",
+    "concurrently": "^7.6.0",
     "eslint": "^8.27.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
@@ -44,9 +47,11 @@
     "eslint-plugin-prettier": "^4.2.1",
     "husky": "^8.0.2",
     "jest": "^29.3.1",
+    "json-to-pretty-yaml": "^1.2.2",
     "lint-staged": "^13.0.3",
     "node-dev": "^7.4.3",
     "prettier": "^2.7.1",
+    "swagger-cli": "^4.0.4",
     "ts-jest": "^29.0.3",
     "typescript": "^4.9.3"
   },

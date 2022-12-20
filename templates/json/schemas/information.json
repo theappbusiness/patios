@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "properties": {
+    "content": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "../attributes/heading.$EXT"
+        }
+      ],
+      "example": {
+        "$ref": "../examples/content.$EXT"
+      }
+    }
+  }
+}

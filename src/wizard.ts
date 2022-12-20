@@ -67,14 +67,27 @@ const getProjectOptions = async (
 
 const makeBoilerplate = (
   processDirectory: string,
-  { entryPoint, projectName }: ProjectOptions,
+  { documentSyntax, entryPoint, projectName }: ProjectOptions,
 ): void => {
   let writeDirectory = '.'
   if (processDirectory !== projectName) {
+    // TODO: add a nice error message for if this dir already exists
     fs.mkdirSync(projectName)
-    writeDirectory += `/${projectName}`
+    writeDirectory = path.join(writeDirectory, projectName)
   }
-  fs.writeFileSync(path.join(writeDirectory, entryPoint), 'Hello Spec!')
+
+  writeDirectory = path.join(writeDirectory, 'src')
+  fs.mkdirSync(writeDirectory)
+
+  fs.cpSync(
+    path.join(__dirname, './templates/', documentSyntax),
+    writeDirectory,
+    { recursive: true },
+  )
+  fs.renameSync(
+    path.join(writeDirectory, `[entryPoint].${documentSyntax}`),
+    path.join(writeDirectory, entryPoint),
+  )
 }
 
 export const init = async (): Promise<void> => {
