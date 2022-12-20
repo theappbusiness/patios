@@ -1,55 +1,17 @@
-import * as fs from 'fs'
 import * as path from 'path'
-import { prompt, PromptObject } from 'prompts'
+import { prompt } from 'prompts'
+import { makeBoilerplate } from './make-boilerplate'
+import {
+  getDocumentSyntaxPrompt,
+  getEntryPointPrompt,
+  getProjectNamePrompt,
+} from './prompts'
 
-interface ProjectOptions {
+export interface ProjectOptions {
   projectName: string
   documentSyntax: string
   entryPoint: string
 }
-
-export const getProjectNamePrompt = (
-  processDirectory: string,
-): PromptObject => ({
-  type: 'text',
-  name: 'projectName',
-  message: 'Project name',
-  initial: processDirectory,
-  validate: (input) =>
-    !!input.match(/^[a-z0-9\-_]+$/i) ||
-    'Project name may only contain letters, numbers, hyphens and underscores',
-})
-
-export const getDocumentSyntaxPrompt = (): PromptObject => ({
-  name: 'documentSyntax',
-  type: 'select',
-  message: 'Document syntax',
-  choices: [
-    { title: 'JSON', value: 'json' },
-    { title: 'YAML', value: 'yaml' },
-  ],
-  initial: 0,
-})
-
-export const getEntryPointPrompt = (documentSyntax: string): PromptObject => ({
-  name: 'entryPoint',
-  type: 'text',
-  message: 'Entry point',
-  initial: `openapi.${documentSyntax}`,
-  validate: (input) =>
-    !!input.match(
-      new RegExp(
-        `(.*)(?<!\\.|${documentSyntax === 'json' ? 'yaml' : 'json'})$`,
-      ),
-    ) ||
-    `Entry point extension must match chosen document syntax (you chose ${documentSyntax})`,
-  format: (input): string => {
-    if (input.match(/(\.json|\.yaml)$/i)) {
-      return input
-    }
-    return `${input}.${documentSyntax}`
-  },
-})
 
 const getProjectOptions = async (
   processDirectory: string,
@@ -63,31 +25,6 @@ const getProjectOptions = async (
     entryPoint,
     projectName,
   } as ProjectOptions
-}
-
-const makeBoilerplate = (
-  processDirectory: string,
-  { documentSyntax, entryPoint, projectName }: ProjectOptions,
-): void => {
-  let writeDirectory = '.'
-  if (processDirectory !== projectName) {
-    // TODO: add a nice error message for if this dir already exists
-    fs.mkdirSync(projectName)
-    writeDirectory = path.join(writeDirectory, projectName)
-  }
-
-  writeDirectory = path.join(writeDirectory, 'src')
-  fs.mkdirSync(writeDirectory)
-
-  fs.cpSync(
-    path.join(__dirname, './templates/', documentSyntax),
-    writeDirectory,
-    { recursive: true },
-  )
-  fs.renameSync(
-    path.join(writeDirectory, `[entryPoint].${documentSyntax}`),
-    path.join(writeDirectory, entryPoint),
-  )
 }
 
 export const init = async (): Promise<void> => {
