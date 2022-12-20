@@ -10,7 +10,11 @@ export const getTemplateFileStringsFactory =
   ({ readFileSync }: FileSystem) =>
   (jsonPath: string): { jsonFileStr: string; yamlFileStr: string } => {
     const rawTemplate = readFileSync(jsonPath).toString()
-    const jsonFileStr = rawTemplate.replaceAll('$EXT', 'json')
+    const jsonFileStr = JSON.stringify(
+      JSON.parse(rawTemplate.replaceAll('$EXT', 'json')),
+      null,
+      2,
+    )
     const yamlFileStr = stringify(
       JSON.parse(rawTemplate.replaceAll('$EXT', 'yaml')),
     )
