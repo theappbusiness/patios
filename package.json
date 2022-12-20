@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test": "jest",
-    "dev": "node-dev src/write-bin-template.ts",
+    "dev": "node-dev src/index.ts",
+    "dev:quick": "node-dev src/write-bin-template.ts",
     "build": "tsc --project tsconfig.build.json && node bin/write-bin-template/index.js",
     "format": "prettier -w .",
     "lint": "eslint --ignore-path .prettierignore \"**/*.ts\"",
