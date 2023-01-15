@@ -1,0 +1,30 @@
+{
+  "name": "~placeholder_project_name~",
+  "version": "1.0.0",
+  "description": "~placeholder_description~",
+  "author": "~placeholder_author~",
+  "engines": {
+    "node": ">=15.0.0"
+  },
+  "license": "~placeholder_license~",
+  "main": "index.js",
+  "scripts": {
+    "build:openapi": "ts-node --esm ./scripts/bundle-openapi.ts",
+    "build:types": "",
+    "validate": "npx swagger-cli validate ./src/$ENTRY_POINT.$EXT"
+  },
+  "type": "module",
+  "dependencies": {
+    "openapi-typescript-codegen": "^0.23.0",
+    "swagger-cli": "^4.0.4",
+    "ts-node": "^10.9.1",
+    "yargs": "^17.6.2"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.17",
+    "@types/yargs": "^17.0.17",
+    "openapi-types": "^12.1.0",
+    "type-fest": "^3.4.0",
+    "typescript": "^4.9.4"
+  }
+}

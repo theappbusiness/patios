@@ -1,0 +1,6 @@
+{
+  "entryFile": "openapi.json",
+  "outputDirectory": "./build",
+  "outputFileName": "wren-gateway-openapi.json",
+  "rootSpecDirectory": "src"
+}

@@ -1,6 +1,7 @@
 import * as path from 'path'
 import { prompt } from 'prompts'
 import { makeBoilerplate } from './make-boilerplate'
+import { writePackage } from './make-package'
 import {
   getDocumentSyntaxPrompt,
   getEntryPointPrompt,
@@ -31,4 +32,5 @@ export const init = async (): Promise<void> => {
   const processDirectory = path.parse(process.env.INIT_CWD || '').base
   const projectOptions = await getProjectOptions(processDirectory)
   makeBoilerplate(processDirectory, projectOptions)
+  writePackage(processDirectory, projectOptions)
 }
